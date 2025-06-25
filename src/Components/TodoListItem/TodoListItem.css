@@ -1,0 +1,23 @@
+.todoItem-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+
+.todo-done {
+    text-decoration: line-through;
+}
+
+.todo-not-done {
+    text-decoration: none;
+}
+
+li {
+    width: 7.5vw;
+
+}
+
+li input {
+    width: 90%;
+}
