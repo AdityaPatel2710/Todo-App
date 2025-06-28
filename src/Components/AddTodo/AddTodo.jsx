@@ -1,20 +1,10 @@
-import { useCallback, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import TodoContext from "../../contexts/TodoContext";
 
 
 function AddTodo() {
     const [newItem, setNewItem] = useState("");
-
-    const { todos, setTodos, editMode } = useContext(TodoContext);
-
-    const addNewTodo = useCallback((newTodo) => {
-        setTodos( [ {
-                        id: Date.now(),
-                        data: newTodo
-                    }, 
-                    ...todos] 
-                );
-    }, [todos]);
+    const { todos, dispatch, editMode } = useContext(TodoContext);
 
     
     return (
@@ -30,7 +20,7 @@ function AddTodo() {
             <button 
                 disabled = {editMode || (newItem == "")}
                 onClick = {() => {
-                    addNewTodo(newItem);
+                    dispatch({ type: "add_todo", payload: {newTodo:newItem} });
                     setNewItem("");
                 }}
             >
@@ -42,7 +32,7 @@ function AddTodo() {
                 disabled = {(todos.length == 0) || editMode}
                 onClick = {() => {
                     setNewItem("");
-                    setTodos([]);
+                    dispatch({ type: "reset_todos", payload: {} });
                 }}
             > 
                 Reset Todo 

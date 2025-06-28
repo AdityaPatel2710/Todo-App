@@ -7,21 +7,7 @@ function TodoListItem({ todo, onEditMode, offEditMode }) {
     const [isFinished, setIsFinished] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [todoData, setTodoData] = useState(todo.data);
-
-    const { todos, setTodos } = useContext(TodoContext);
-
-    function deleteTodo(id) {
-        let remainingTodos = todos.filter((item) => (item.id != id));
-        setTodos(remainingTodos);
-    }
-
-    function editTodo(id, newTodo) {
-        let newTodos = todos.map((todo) => {
-            if(todo.id == id) todo.data = newTodo;
-            return todo;
-        })
-        setTodos(newTodos);
-    }
+    const { dispatch } = useContext(TodoContext);
 
 
     return (
@@ -46,7 +32,7 @@ function TodoListItem({ todo, onEditMode, offEditMode }) {
             <button 
                 onClick = {() => {
                     if (isEditing) {
-                        editTodo(todo.id, todoData); 
+                        dispatch({ type: "edit_todo", payload: {id:todo.id, newTodo:todoData} });
                         offEditMode();
                     }
                     else onEditMode();
@@ -58,7 +44,7 @@ function TodoListItem({ todo, onEditMode, offEditMode }) {
             </button>
 
             <button 
-                onClick = {() => deleteTodo(todo.id)} 
+                onClick = {() => dispatch({ type: "delete_todo", payload: {id:todo.id} })} 
                 disabled = {isEditing}
             > 
                 Remove

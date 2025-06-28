@@ -6,7 +6,6 @@ const MemoisedTodoListItem = memo(TodoListItem);
 
 function TodoList() {
     const [currEditing, setCurrEditing] = useState(0);
-
     const { todos, setEditMode } = useContext(TodoContext);
 
     const onEditMode = useCallback(() => {
