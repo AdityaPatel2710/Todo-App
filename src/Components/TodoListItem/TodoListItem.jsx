@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import './TodoListItem.css';
+import TodoContext from "../../contexts/TodoContext";
 
 
-function TodoListItem({ todo, onDelete, onEdit, onEditMode, offEditMode }) {
+function TodoListItem({ todo, onEditMode, offEditMode }) {
     const [isFinished, setIsFinished] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [todoData, setTodoData] = useState(todo.data);
+
+    const { todos, setTodos } = useContext(TodoContext);
+
+    function deleteTodo(id) {
+        let remainingTodos = todos.filter((item) => (item.id != id));
+        setTodos(remainingTodos);
+    }
+
+    function editTodo(id, newTodo) {
+        let newTodos = todos.map((todo) => {
+            if(todo.id == id) todo.data = newTodo;
+            return todo;
+        })
+        setTodos(newTodos);
+    }
+
 
     return (
         <div className="todoItem-container">
@@ -21,28 +38,28 @@ function TodoListItem({ todo, onDelete, onEdit, onEditMode, offEditMode }) {
 
             <button 
                 onClick = {() => setIsFinished(!isFinished)} 
-                disabled = {(isEditing) ? true : false}
+                disabled = {isEditing}
             > 
-                {(isFinished) ? 'ReDo' : 'Done'}  
+                {(isFinished) ? 'Undone' : 'Done'}  
             </button>
 
             <button 
                 onClick = {() => {
                     if (isEditing) {
-                        onEdit(todo.id, todoData); 
+                        editTodo(todo.id, todoData); 
                         offEditMode();
                     }
                     else onEditMode();
                     setIsEditing(!isEditing);
                 }} 
-                disabled = {(isFinished || (todoData=="")) ? true : false}
+                disabled = {isFinished || (todoData=="")}
             > 
                 {(isEditing) ? 'Save' : 'Edit'}  
             </button>
 
             <button 
-                onClick = {() => onDelete(todo.id)} 
-                disabled = {(isEditing) ? true : false}
+                onClick = {() => deleteTodo(todo.id)} 
+                disabled = {isEditing}
             > 
                 Remove
             </button>

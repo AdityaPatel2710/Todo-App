@@ -1,23 +1,31 @@
+import { memo, useCallback, useContext, useState } from "react";
 import TodoListItem from "../TodoListItem/TodoListItem";
+import TodoContext from "../../contexts/TodoContext";
 
-function TodoList({ todos, onDelete, onEdit, onEditMode, offEditMode }) {
+const MemoisedTodoListItem = memo(TodoListItem);
 
-    // let todoList = todos.map((todo, index) => <TodoListItem todo={todo} key = {index} />);
-     /**
-      * this key should always be unique for a given component
-      * even if the index of component change, the key should remain unchanged
-      * here (key = index), which will be changed for a component if some how we sort the array, which should not be the case
-      * Therefore, in most of the cases (key = id), where id is unique for a given component and never changes
-      */
+function TodoList() {
+    const [currEditing, setCurrEditing] = useState(0);
+
+    const { todos, setEditMode } = useContext(TodoContext);
+
+    const onEditMode = useCallback(() => {
+        setEditMode(true);
+        setCurrEditing(currEditing + 1);
+    }, [currEditing]);
+
+    const offEditMode = useCallback(() => {
+        if(currEditing == 1) setEditMode(false);
+        setCurrEditing(currEditing - 1);
+    }, [currEditing]);
+
 
     return (
         <ul className="todolist-wrapper">
             {
-                todos.map((todo) => <TodoListItem
+                todos.map((todo) => <MemoisedTodoListItem   
                                         key = {todo.id}
                                         todo = {todo}
-                                        onDelete = {onDelete}
-                                        onEdit = {onEdit}
                                         onEditMode = {onEditMode}
                                         offEditMode = {offEditMode}
                                     />
