@@ -1,17 +1,27 @@
 import { useState } from "react";
 import TodoList from "../TodoList/ToDoList";
-import TodoListItem from "../TodoListItem/TodoListItem";
 
 import './Todo.css';
+import AddTodo from "../AddTodo/AddTodo";
 
-
-let count = 0;
 
 function Todo() {
     const [items, setItems] = useState([]);
-    const [newItem, setNewItem] = useState("");
     const [editMode, setEditMode] = useState(false);
     const [currEditing, setCurrEditing] = useState(0);
+
+    function addNewTodo(newTodo) {
+        setItems( [ {
+                        id: Date.now(),
+                        data: newTodo
+                    }, 
+                    ...items] 
+                );
+    }
+
+    function resetTodo() {
+        setItems([]);
+    }
 
     function deleteTodo(id) {
         let remainingTodos = items.filter((item) => (item.id != id));
@@ -38,47 +48,25 @@ function Todo() {
 
     return (
         <div className="todo">
-            <input 
-                type = "text"
-                value = {newItem} 
-                onChange = {(Event) => setNewItem(Event.target.value)} 
+
+            {/** <---------- AddTodo ----------> */}
+            <AddTodo 
+                onAdd = {addNewTodo}
+                editMode = {editMode}
+                onReset = {resetTodo}
+                isTodoEmpty = {items.length == 0}
             />
-            &nbsp; &nbsp;
+            {/** <---------- AddTodo ----------> */}
 
-            <button 
-                onClick = {() => setItems([...items, {data: newItem, id: count++}])}
-                disabled = {(editMode) ? true : false}
-            >
-                Add ToDo 
-            </button>
-            &nbsp;
-
-            <button 
-                onClick = {() => {
-                    count = 0;
-                    setNewItem("");
-                    setItems([]); 
-                }}
-                disabled = {((items.length == 0) || editMode) ? true : false}
-            > 
-                Reset ToDo 
-            </button>
-
-            { /** <ToDoList todos={ items }/> */}
-
-            <ul>
-                {items.map(
-                    (todo) => <TodoListItem 
-                                        todo = {todo.data} 
-                                        id = {todo.id}
-                                        key = {todo.id} 
-                                        delete = {deleteTodo} 
-                                        edit = {editTodo}
-                                        onEditMode = {onEditMode}
-                                        offEditMode = {offEditMode}
-                                    />
-                )}
-            </ul>
+            {/** <---------- TodoList ----------> */}
+            <TodoList 
+                todos = {items}
+                onDelete = {deleteTodo} 
+                onEdit = {editTodo}
+                onEditMode = {onEditMode}
+                offEditMode = {offEditMode}
+            />
+            {/** <---------- TodoList ----------> */}
 
         </div>
     )

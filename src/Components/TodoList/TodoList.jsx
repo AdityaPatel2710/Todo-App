@@ -1,8 +1,8 @@
 import TodoListItem from "../TodoListItem/TodoListItem";
 
-function TodoList({ todos }) {
+function TodoList({ todos, onDelete, onEdit, onEditMode, offEditMode }) {
 
-    let todoList = todos.map((todo, index) => <TodoListItem todo={todo} key = {index} />);
+    // let todoList = todos.map((todo, index) => <TodoListItem todo={todo} key = {index} />);
      /**
       * this key should always be unique for a given component
       * even if the index of component change, the key should remain unchanged
@@ -11,8 +11,18 @@ function TodoList({ todos }) {
       */
 
     return (
-        <ul>
-           { todoList } 
+        <ul className="todolist-wrapper">
+            {
+                todos.map((todo) => <TodoListItem
+                                        key = {todo.id}
+                                        todo = {todo}
+                                        onDelete = {onDelete}
+                                        onEdit = {onEdit}
+                                        onEditMode = {onEditMode}
+                                        offEditMode = {offEditMode}
+                                    />
+                        )
+            }
         </ul>
     )
 }

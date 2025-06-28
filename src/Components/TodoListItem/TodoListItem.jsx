@@ -1,14 +1,11 @@
 import { useState } from "react";
 import './TodoListItem.css';
 
-function handleClick(todo) {
-    alert(`ToDo List item \'${todo}\' clicked!`);
-}
 
-function TodoListItem(props) {
+function TodoListItem({ todo, onDelete, onEdit, onEditMode, offEditMode }) {
     const [isFinished, setIsFinished] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [todoData, setTodoData] = useState(props.todo);
+    const [todoData, setTodoData] = useState(todo.data);
 
     return (
         <div className="todoItem-container">
@@ -32,10 +29,10 @@ function TodoListItem(props) {
             <button 
                 onClick = {() => {
                     if (isEditing) {
-                        props.edit(props.id, todoData); 
-                        props.offEditMode();
+                        onEdit(todo.id, todoData); 
+                        offEditMode();
                     }
-                    else props.onEditMode();
+                    else onEditMode();
                     setIsEditing(!isEditing);
                 }} 
                 disabled = {(isFinished || (todoData=="")) ? true : false}
@@ -44,7 +41,7 @@ function TodoListItem(props) {
             </button>
 
             <button 
-                onClick = {() => props.delete(props.id)} 
+                onClick = {() => onDelete(todo.id)} 
                 disabled = {(isEditing) ? true : false}
             > 
                 Remove
