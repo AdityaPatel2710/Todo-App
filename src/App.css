@@ -1,12 +1,50 @@
-.todo-header {
-    margin-left: 37.5vw;
-    margin-bottom: 1.5vh;
-    font-size: x-large;
-    font-weight: bold;
-    font-family: 'Times New Roman', Times, serif;
-    text-decoration: underline;
+/* Global Styles */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    font-size: 1rem;
 }
 
-.todo {
-    margin: 0 30vw;
+/* Todo Header */
+.todo-header {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 2vh 0;
+    color: #bb86fc;
+    text-shadow: 0 0 10px rgba(187, 134, 252, 0.5);
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(187, 134, 252, 0.5);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(187, 134, 252, 1);
+    }
+}
+
+/* Buttons */
+button {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #bb86fc;
+    color: #121212;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #d7b8ff;
+    transform: scale(1.05);
 }

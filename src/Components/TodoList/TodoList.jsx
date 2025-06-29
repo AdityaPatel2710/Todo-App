@@ -1,6 +1,7 @@
 import { memo, useCallback, useContext, useState } from "react";
 import TodoListItem from "../TodoListItem/TodoListItem";
 import TodoContext from "../../contexts/TodoContext";
+import "./TodoList.css";
 
 const MemoisedTodoListItem = memo(TodoListItem);
 

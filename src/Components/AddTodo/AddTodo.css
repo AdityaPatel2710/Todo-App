@@ -1,0 +1,30 @@
+.add-todo-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input[type="text"] {
+    width: 22vw;
+    padding: 0.7rem;
+    margin-right: 1vw;
+    border: #1e1e1e solid 1px;
+    border-radius: 0.5rem;
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    transition: background-color 0.15s ease, color 0.15s ease, border 0.15s ease-in;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border: #bb86fc solid 1px;
+}
+
+.add-todo-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5vw;
+}

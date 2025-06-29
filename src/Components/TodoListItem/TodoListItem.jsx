@@ -22,33 +22,35 @@ function TodoListItem({ todo, onEditMode, offEditMode }) {
             }
             </li>
 
-            <button 
-                onClick = {() => setIsFinished(!isFinished)} 
-                disabled = {isEditing}
-            > 
-                {(isFinished) ? 'Undone' : 'Done'}  
-            </button>
+            <div className="todoItem-buttons">
+                <button 
+                    onClick = {() => setIsFinished(!isFinished)} 
+                    disabled = {isEditing}
+                > 
+                    {(isFinished) ? 'Undone' : 'Done'}  
+                </button>
 
-            <button 
-                onClick = {() => {
-                    if (isEditing) {
-                        dispatch({ type: "edit_todo", payload: {id:todo.id, newTodo:todoData} });
-                        offEditMode();
-                    }
-                    else onEditMode();
-                    setIsEditing(!isEditing);
-                }} 
-                disabled = {isFinished || (todoData=="")}
-            > 
-                {(isEditing) ? 'Save' : 'Edit'}  
-            </button>
+                <button 
+                    onClick = {() => {
+                        if (isEditing) {
+                            dispatch({ type: "edit_todo", payload: {id:todo.id, newTodo:todoData} });
+                            offEditMode();
+                        }
+                        else onEditMode();
+                        setIsEditing(!isEditing);
+                    }} 
+                    disabled = {isFinished || (todoData=="")}
+                > 
+                    {(isEditing) ? 'Save' : 'Edit'}  
+                </button>
 
-            <button 
-                onClick = {() => dispatch({ type: "delete_todo", payload: {id:todo.id} })} 
-                disabled = {isEditing}
-            > 
-                Remove
-            </button>
+                <button 
+                    onClick = {() => dispatch({ type: "delete_todo", payload: {id:todo.id} })} 
+                    disabled = {isEditing}
+                > 
+                    Remove
+                </button>
+            </div>
 
         </div>
     )

@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import TodoList from "../TodoList/ToDoList";
+import TodoList from "../TodoList/TodoList";
 
 import './Todo.css';
 import AddTodo from "../AddTodo/AddTodo";
